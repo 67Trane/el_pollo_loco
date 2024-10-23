@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="./style.css">
+   <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+   <script src="./js/global.js"></script>
+   <script src="./models/drawable-object.class.js"></script>
+   <script src="./models/moveable-object.class.js"></script>
+   <script src="./models/character.class.js"></script>
+   <script src="./models/skull.class.js"></script>
+   <script src="./models/cloud.class.js"></script>
+   <script src="./models/game-over.class.js"></script>
+   <script src="./models/status-bar.class.js"></script>
+   <script src="./models/world.class.js"></script>
+   <script src="./models/background-object.class.js"></script>
+   <script src="./models/keyboard.class.js"></script>
+   <script src="./models/level.class.js"></script>
+   <script src="./models/throwable-object.class.js"></script>
+   <script src="./models/collectible-items.class.js"></script>
+   <script src="./models/collectible-bottle.class.js"></script>
+   <script src="./models/collectible-coin.class.js"></script>
+   <script src="./models/mobile-gui.class.js"></script>
+   <script src="./models/endboss.class.js"></script>
+   <script src="./models/explosion.class.js"></script>
+   <script src="./levels/level1.js"></script>
+   
+   <script src="./js/game.js"></script>
+   <title>Night Stalker</title>
+</head>
+
+<body onload="init()">
+
+   <div class="mobile-rotate d-none" id="rotate">
+      <h1 class="infos">Please rotate your phone</h1>
+   </div>
+
+   <div id="fullscreen">
+      <div class="options-wrapper">
+         <div class="options" id="options">
+            <img src="img/mobile-imgs/mute.png" alt="" onclick="muteAllSounds()">
+            <img src="./img/mobile-imgs/pause.png" alt="" onclick="unpauseCharacter()">
+            <img src="./img/mobile-imgs/restart.png" alt="" onclick="restartGame()">
+            <img src="./img/mobile-imgs/fullscreen.png" alt="" onclick="toggleFullscreen()">
+         </div>
+      </div>
+
+      <div class="mobile-wrapper" id="mobile-wrapper">
+         <div class="mobile-movement" id="mobile-movement">
+            <img id="left-btn" src="./img/mobile-imgs/left.png" alt="left">
+            <img id="right-btn" src="./img/mobile-imgs/right.png" alt="right">
+            <img id="up-btn" src="./img/mobile-imgs/up.png" alt="jump">
+            <img id="molotov-btn" src="./img/mobile-imgs/molotov.png" alt="molotov">
+         </div>
+      </div>
+
+      <div class="loading-screen d-none" id="loading-screen"><img
+            src="./img/text-animation/PNG/LoadGame/LoadGame_00.png" alt="" class="loading-screen-img"
+            id="loading-screen-img"></div>
+
+      <div class="start-screen" id="start-screen">
+         <div class="info-field-wrapper d-none" id="info-field-wrapper">
+            <div class="info-field" id="info-field">
+               <span>Information</span>
+               <img src="./img/CloseBtn.png" alt="" class="close-btn" id="close-btn" onclick="closeInfo()">
+               <div class="info-text">
+                  <h1>Arrow Keys to move and "SPACE" to jump</h1>
+                  <h1>"F" to throw</h1>
+                  <h1>"P" to stop</h1>
+                  <h1>"R" Restart the GAME</h1>
+               </div>
+            </div>
+         </div>
+
+         <button class="start-btn btn-donate" id="start-btn" onclick="startButton()"><span
+               class="text">S T A R T</span></button>
+         <button class="start-btn btn-donate" id="infos" onclick="openInfo()"><span>i n f o</span></button>
+
+      </div>
+      <canvas id="canvas" width="720" height="480"></canvas>
+   </div>
+   <script src="./js/mobile-movement.js"></script>
+   <script src="./js/options.js"></script>
+</body>
+
+</html>
