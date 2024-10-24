@@ -43,7 +43,7 @@ document.getElementById("molotov-btn").addEventListener("touchend", function (ev
 });
 
 function isOnMobile() {
-  if (window.innerWidth > window.innerHeight && window.innerHeight > 481) {
+  if (window.innerWidth > window.innerHeight && window.innerHeight > 481 && window.innerHeight > 768) {
     document.getElementById("mobile-movement").classList.add("d-none");
   } else {
     document.getElementById("mobile-movement").classList.remove("d-none");

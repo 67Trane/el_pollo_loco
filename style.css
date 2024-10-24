@@ -232,7 +232,7 @@ canvas {
   }
 
   .mobile-movement {
-    width: 50%;
+    width: 70%;
   }
 
   .start-screen {
@@ -256,6 +256,7 @@ canvas {
 
   .options-wrapper {
     height: 100%;
+    width: 100%;
   }
 
   .mobile-wrapper {

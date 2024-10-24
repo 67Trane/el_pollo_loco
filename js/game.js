@@ -47,7 +47,11 @@ function startGame() {
 
 document.addEventListener("keydown", (event) => {
   if (event.keyCode == 80) {
-    stopAllIntervals();
+    if (gameIsPaused) {
+      unpauseCharacter();
+    } else {
+      stopAllIntervals();
+    }
   }
 
   if (event.keyCode == 82) {
@@ -143,5 +147,3 @@ function closeInfo() {
 function openInfo() {
   document.getElementById("info-field-wrapper").classList.remove("d-none");
 }
-
-

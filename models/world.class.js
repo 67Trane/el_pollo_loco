@@ -1,15 +1,15 @@
-backgroundMusic = new Audio("./audio/background_music.mp3")
+backgroundMusic = new Audio("./audio/background_music.mp3");
 class World {
   character = new Character();
-  level
+  level;
   canvas;
   ctx;
-  isMobile = window.isMobile
+  isMobile = window.isMobile;
 
-  bottleSound = new Audio("./audio/bottle-shatter.mp3")
+  bottleSound = new Audio("./audio/bottle-shatter.mp3");
   keyboard;
   camera_x = 0;
-  gameOver = new GameOver()
+  gameOver = new GameOver();
   statusBar = new StatusBar();
   bottleBar = new StatusBar("THROW", 50);
   coinBar = new StatusBar("COIN", 100);
@@ -18,12 +18,22 @@ class World {
   collectibleBottles = [];
   groundlevel = 400;
   explosions = [];
-
+  canThrow = true;
 
   constructor(canvas, keyboard) {
-    this.checkWinningScreen()
+    this.checkWinningScreen();
     this.level = new Level(
-      [new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Endboss()],
+      [
+        new Skull(),
+        new Skull(),
+        new Skull(),
+        new Skull(),
+        new Skull(),
+        new Skull(),
+        new Skull(),
+        new Skull(),
+        new Endboss(),
+      ],
       [new Cloud(), new Cloud(), new Cloud(), new Cloud()],
       [
         new BackgroundObject("img/background/PNG/3_game_background/layers/1.png", -719, 1),
@@ -49,19 +59,19 @@ class World {
     this.run();
     this.addCollectibleBottleToMap();
     this.addCollectibleCoinToMap();
-    this.pushAllSounds()
-    loaded = true
+    this.pushAllSounds();
+    loaded = true;
   }
 
   pushAllSounds() {
-    allSounds.push(backgroundMusic)
-    allSounds.push(this.bottleSound)
+    allSounds.push(backgroundMusic);
+    allSounds.push(this.bottleSound);
   }
 
   playBackgroundMusic() {
-    backgroundMusic.play()
-    backgroundMusic.volume = 0.1
-    backgroundMusic.loop = true
+    backgroundMusic.play();
+    backgroundMusic.volume = 0.1;
+    backgroundMusic.loop = true;
   }
 
   setWorld() {
@@ -72,13 +82,12 @@ class World {
     });
   }
 
-
   run() {
     setInterval(() => {
       if (!allSoundsMute) {
-        this.playBackgroundMusic()
+        this.playBackgroundMusic();
       }
-    }, 500)
+    }, 500);
 
     setInterval(() => {
       this.checkCollisions();
@@ -101,11 +110,15 @@ class World {
     }, 30);
   }
 
-
-
   checkThrowObjects() {
     if (this.keyboard.F) {
-      this.throwObject()
+      if (this.canThrow) {
+        this.throwObject();
+        this.canThrow = false
+        setTimeout(() => {
+          this.canThrow = true
+        }, 500)
+      }
     }
   }
 
@@ -121,7 +134,7 @@ class World {
   checkExplosions() {
     this.explosions.forEach((explosion, i) => {
       if (!allSoundsMute) {
-        this.bottleSound.play()
+        this.bottleSound.play();
       }
       if (explosion.done == true) {
         this.explosions.splice(i, 1);
@@ -149,8 +162,6 @@ class World {
     this.checkBottles();
   }
 
-
-
   checkBottles() {
     this.bottleBar.setPercentage(this.character.thorws);
     this.collectibleBottles.some((bottle, index) => {
@@ -164,14 +175,14 @@ class World {
   }
 
   checkCoins() {
-    let collectCoinSound = new Audio("./audio/collect-coin.mp3")
+    let collectCoinSound = new Audio("./audio/collect-coin.mp3");
     this.coinBar.setPercentage(this.character.coins);
     this.allCoins.some((coin, index) => {
       if (this.collectItem(coin)) {
         this.allCoins.splice(index, 1);
         this.character.coins += 20;
         if (!allSoundsMute) {
-          collectCoinSound.play()
+          collectCoinSound.play();
         }
         this.coinBar.setPercentage(this.character.coins);
       }
@@ -209,14 +220,14 @@ class World {
           this.objectExplodes(bottle);
           enemy.hp -= 10;
           if (enemy instanceof Endboss) {
-            enemy.healthbar.setPercentage(enemy.hp)
+            enemy.healthbar.setPercentage(enemy.hp);
           }
           if (enemy.hp <= 0) {
             if (enemy instanceof Endboss) {
               setTimeout(() => {
-                stopAllIntervals()
-                this.winningscreen()
-              }, 2000)
+                stopAllIntervals();
+                this.winningscreen();
+              }, 2000);
             }
             enemy.skullIsDying();
             clearInterval(enemy.moveId);
@@ -228,13 +239,13 @@ class World {
   }
 
   checkWinningScreen() {
-    let win = document.getElementById("winning")
-    win.classList.add("d-none")
+    let win = document.getElementById("winning");
+    win.classList.add("d-none");
   }
 
   winningscreen() {
-    let win = document.getElementById("winning")
-    win.classList.remove("d-none")
+    let win = document.getElementById("winning");
+    win.classList.remove("d-none");
   }
 
   parallaxEffect() {
@@ -250,11 +261,11 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.parallaxEffect()
+    this.parallaxEffect();
     this.ctx.translate(this.camera_x, 0);
-    this.placeInWorld()
+    this.placeInWorld();
     this.ctx.translate(-this.camera_x, 0);
-    this.runWithCamera()
+    this.runWithCamera();
 
     let self = this;
     requestAnimationFrame(() => {
@@ -281,8 +292,8 @@ class World {
 
   characterDeadGameOver() {
     if (this.character.energy <= 0) {
-      this.addToMap(this.gameOver)
-      this.gameOver.init()
+      this.addToMap(this.gameOver);
+      this.gameOver.init();
     }
   }
 
