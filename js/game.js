@@ -47,11 +47,7 @@ function startGame() {
 
 document.addEventListener("keydown", (event) => {
   if (event.keyCode == 80) {
-    if (gameIsPaused) {
-      unpauseCharacter();
-    } else {
-      stopAllIntervals();
-    }
+    unpauseCharacter();
   }
 
   if (event.keyCode == 82) {

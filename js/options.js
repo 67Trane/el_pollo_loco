@@ -46,6 +46,8 @@ function unpauseCharacter() {
     world.level.enemies.forEach((enemie) => {
       enemie.initialize();
     });
+    gameIsPaused = false;
+  } else {
+    stopAllIntervals();
   }
-  gameIsPaused = false;
 }
