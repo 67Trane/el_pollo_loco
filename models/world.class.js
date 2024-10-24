@@ -5,8 +5,8 @@ class World {
   canvas;
   ctx;
   isMobile = window.isMobile
-  
-  bottleSound= new Audio("./audio/bottle-shatter.mp3")
+
+  bottleSound = new Audio("./audio/bottle-shatter.mp3")
   keyboard;
   camera_x = 0;
   gameOver = new GameOver()
@@ -18,9 +18,10 @@ class World {
   collectibleBottles = [];
   groundlevel = 400;
   explosions = [];
- 
+
 
   constructor(canvas, keyboard) {
+    this.checkWinningScreen()
     this.level = new Level(
       [new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Skull(), new Endboss()],
       [new Cloud(), new Cloud(), new Cloud(), new Cloud()],
@@ -56,7 +57,7 @@ class World {
     allSounds.push(backgroundMusic)
     allSounds.push(this.bottleSound)
   }
-    
+
   playBackgroundMusic() {
     backgroundMusic.play()
     backgroundMusic.volume = 0.1
@@ -74,7 +75,7 @@ class World {
 
   run() {
     setInterval(() => {
-      if(!allSoundsMute) {
+      if (!allSoundsMute) {
         this.playBackgroundMusic()
       }
     }, 500)
@@ -110,16 +111,16 @@ class World {
 
   throwObject() {
     if (this.character.thorws > 0) {
-        this.character.thorws -= 10;
-        this.bottleBar.setPercentage(this.character.thorws);
-        let throwbottle = new ThrowableObject(this.character.x + 100, this.character.y);
-        this.throwableObject.push(throwbottle);
-      }
+      this.character.thorws -= 10;
+      this.bottleBar.setPercentage(this.character.thorws);
+      let throwbottle = new ThrowableObject(this.character.x + 100, this.character.y);
+      this.throwableObject.push(throwbottle);
+    }
   }
 
   checkExplosions() {
     this.explosions.forEach((explosion, i) => {
-      if(!allSoundsMute) {
+      if (!allSoundsMute) {
         this.bottleSound.play()
       }
       if (explosion.done == true) {
@@ -169,7 +170,7 @@ class World {
       if (this.collectItem(coin)) {
         this.allCoins.splice(index, 1);
         this.character.coins += 20;
-        if(!allSoundsMute) {
+        if (!allSoundsMute) {
           collectCoinSound.play()
         }
         this.coinBar.setPercentage(this.character.coins);
@@ -211,6 +212,12 @@ class World {
             enemy.healthbar.setPercentage(enemy.hp)
           }
           if (enemy.hp <= 0) {
+            if (enemy instanceof Endboss) {
+              setTimeout(() => {
+                stopAllIntervals()
+                this.winningscreen()
+              }, 2000)
+            }
             enemy.skullIsDying();
             clearInterval(enemy.moveId);
             clearInterval(enemy.idleId);
@@ -218,6 +225,16 @@ class World {
         }
       });
     }
+  }
+
+  checkWinningScreen() {
+    let win = document.getElementById("winning")
+    win.classList.add("d-none")
+  }
+
+  winningscreen() {
+    let win = document.getElementById("winning")
+    win.classList.remove("d-none")
   }
 
   parallaxEffect() {
@@ -263,7 +280,7 @@ class World {
   }
 
   characterDeadGameOver() {
-    if(this.character.energy <= 0) {
+    if (this.character.energy <= 0) {
       this.addToMap(this.gameOver)
       this.gameOver.init()
     }
