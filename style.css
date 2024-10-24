@@ -3,6 +3,8 @@ html {
   color: white;
   background-image: url("img/backbackground.webp");
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @font-face {
@@ -15,6 +17,7 @@ html {
   margin: unset;
   box-sizing: border-box;
   color: white;
+  box-sizing: border-box;
 }
 
 body {
@@ -181,11 +184,20 @@ canvas {
 
 @media only screen and (max-width: 720px) {
   .mobile-wrapper {
+    width: 100vw;
+  }
+  
+  .mobile-rotate {
     width: 100%;
   }
 
+
+  #fullscreen {
+    width: 100vw;
+  }
+
   canvas {
-    width: 100%;
+    width: 100vw;
   }
 }
 

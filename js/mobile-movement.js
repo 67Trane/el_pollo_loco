@@ -48,4 +48,6 @@ function isOnMobile() {
   }
 }
 
-isOnMobile();
+document.addEventListener("onchange", () => {
+  isOnMobile();
+});
