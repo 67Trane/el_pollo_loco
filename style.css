@@ -186,6 +186,14 @@ canvas {
   .mobile-wrapper {
     width: 100vw;
   }
+
+  .infos {
+    display: none;
+  }
+
+  canvas {
+    width: 100vw !important;
+  }
   
   .mobile-rotate {
     width: 100%;
@@ -245,19 +253,6 @@ canvas {
   align-items: center;
   display: flex;
   flex-direction: column;
-}
-
-@media (max-height: 720px) {
-  #fullscreen {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-  }
-
-  .infos {
-    display: none;
-  }
 }
 
 /* BUTTON AREA */
