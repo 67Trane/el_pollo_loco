@@ -1,4 +1,12 @@
+/**
+ * Class representing a character in the game.
+ * @extends MoveableObject
+ */
 class Character extends MoveableObject {
+  /**
+   * Array of image paths for the walking animation.
+   * @type {string[]}
+   */
   IMAGES_WALKING = [
     "img/chracter/black_ninja/PNG/PNG_sequences/Running/Running_001.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Running/Running_002.png",
@@ -13,6 +21,10 @@ class Character extends MoveableObject {
     "img/chracter/black_ninja/PNG/PNG_sequences/Running/Running_011.png",
   ];
 
+  /**
+   * Array of image paths for the jumping animation.
+   * @type {string[]}
+   */
   IMAGES_JUMPING = [
     "img/chracter/black_ninja/PNG/PNG_sequences/Jump Start/Jump Start_000.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Jump Start/Jump Start_001.png",
@@ -34,6 +46,10 @@ class Character extends MoveableObject {
     "img/chracter/black_ninja/PNG/PNG_sequences/Falling Down/Falling Down_005.png",
   ];
 
+  /**
+   * Array of image paths for the death animation.
+   * @type {string[]}
+   */
   IMAGES_ISDEAD = [
     "img/chracter/black_ninja/PNG/PNG_sequences/Dying/Dying_000.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Dying/Dying_001.png",
@@ -52,6 +68,10 @@ class Character extends MoveableObject {
     "img/chracter/black_ninja/PNG/PNG_sequences/Dying/Dying_014.png",
   ];
 
+  /**
+   * Array of image paths for the hurt animation.
+   * @type {string[]}
+   */
   IMAGES_HURT = [
     "img/chracter/black_ninja/PNG/PNG_sequences/Hurt/Hurt_000.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Hurt/Hurt_001.png",
@@ -67,6 +87,10 @@ class Character extends MoveableObject {
     "img/chracter/black_ninja/PNG/PNG_sequences/Hurt/Hurt_011.png",
   ];
 
+  /**
+   * Array of image paths for the idle animation.
+   * @type {string[]}
+   */
   IMAGES_IDLE = [
     "img/chracter/black_ninja/PNG/PNG_sequences/Idle Blinking/Idle Blinking_000.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Idle Blinking/Idle Blinking_001.png",
@@ -88,6 +112,10 @@ class Character extends MoveableObject {
     "img/chracter/black_ninja/PNG/PNG_sequences/Idle Blinking/Idle Blinking_017.png",
   ];
 
+  /**
+   * Array of image paths for the throwing animation.
+   * @type {string[]}
+   */
   IMAGES_THROW = [
     "img/chracter/black_ninja/PNG/PNG_sequences/Throwing/Throwing_000.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Throwing/Throwing_001.png",
@@ -102,17 +130,68 @@ class Character extends MoveableObject {
     "img/chracter/black_ninja/PNG/PNG_sequences/Throwing/Throwing_010.png",
     "img/chracter/black_ninja/PNG/PNG_sequences/Throwing/Throwing_011.png",
   ];
+
+  /**
+   * Height of the character.
+   * @type {number}
+   */
   height = 120;
+
+  /**
+   * Width of the character.
+   * @type {number}
+   */
   width = 120;
+
+  /**
+   * Vertical position of the character.
+   * @type {number}
+   */
   y = 342.5;
+
+  /**
+   * Horizontal speed of the character.
+   * @type {number}
+   */
   speed = 10;
+
+  /**
+   * Reference to the game world.
+   * @type {object}
+   */
   world;
+
+  /**
+   * Audio object for the walking sound.
+   * @type {HTMLAudioElement}
+   */
   walking_sound = new Audio("./audio/steps.mp3");
+
+  /**
+   * Audio object for the jumping sound.
+   * @type {HTMLAudioElement}
+   */
   jump_sound = new Audio("./audio/jump.mp3");
+
+  /**
+   * Audio object for the death sound.
+   * @type {HTMLAudioElement}
+   */
   dead_sound = new Audio("./audio/dead.mp3");
 
+  /**
+   * Audio object for the hit sound.
+   * @type {HTMLAudioElement}
+   */
+  hit_sound = new Audio("./audio/hit.mp3");
+
+  /**
+   * Creates an instance of Character.
+   */
   constructor() {
-    super().loadImage("img/chracter/black_ninja/PNG/PNG_sequences/Running/Running_000.png");
+    super().loadImage(
+      "img/chracter/black_ninja/PNG/PNG_sequences/Running/Running_000.png"
+    );
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_ISDEAD);
@@ -126,31 +205,47 @@ class Character extends MoveableObject {
     allSounds.push(this.walking_sound);
     allSounds.push(this.jump_sound);
     allSounds.push(this.dead_sound);
+    allSounds.push(this.hit_sound);
   }
 
+  /**
+   * Moves the character to the right.
+   */
   moveCharacterRight() {
     this.otherDirection = false;
     this.moveRight();
     this.playSoundIfNotMuted(this.walking_sound);
   }
 
+  /**
+   * Moves the character to the left.
+   */
   moveCharacterLeft() {
     this.otherDirection = true;
     this.moveLeft();
     this.playSoundIfNotMuted(this.walking_sound);
   }
 
+  /**
+   * Sets the character to idle animation.
+   */
   characterIsIdle() {
     this.intervalHelper(() => this.playAnimation(this.IMAGES_IDLE), 60);
   }
 
+  /**
+   * Initializes the character's animations.
+   */
   animate() {
     this.characterIsIdle();
     this.intervalHelper(() => this.moveCharacter(), 1000 / 60);
-    this.intervalHelper(() => this.playCharaterAnimation(), 60);
+    this.intervalHelper(() => this.playCharacterAnimation(), 60);
   }
 
-  playCharaterAnimation() {
+  /**
+   * Determines and plays the appropriate animation based on the character's state.
+   */
+  playCharacterAnimation() {
     if (this.isDead()) {
       this.playAnimation(this.IMAGES_ISDEAD, true);
       this.playSoundIfNotMuted(this.dead_sound);
@@ -170,10 +265,16 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Plays the throw animation.
+   */
   playThrowAnimation() {
     this.playAnimation(this.IMAGES_THROW);
   }
 
+  /**
+   * Moves the character based on keyboard input.
+   */
   moveCharacter() {
     this.walking_sound.pause();
     if (this.world.keyboard.F) {
@@ -181,7 +282,10 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_THROW);
       }
     }
-    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+    if (
+      this.world.keyboard.RIGHT &&
+      this.x < this.world.level.level_end_x
+    ) {
       this.moveCharacterRight();
     }
     if (this.world.keyboard.LEFT && this.x > 0) {
@@ -193,22 +297,34 @@ class Character extends MoveableObject {
     this.replacePosition();
   }
 
+  /**
+   * Updates the camera position to follow the character.
+   */
   cameraFollow() {
     setInterval(() => {
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
   }
 
+  /**
+   * Makes the character jump.
+   */
   jump() {
     this.speedY = 30;
   }
 
+  /**
+   * Ensures the character doesn't sink below the ground level.
+   */
   replacePosition() {
     if (this.y > this.groundLevel) {
       this.y = this.groundLevel;
     }
   }
 
+  /**
+   * Applies a knockback effect to the character.
+   */
   knockBack() {
     this.x -= 30;
   }

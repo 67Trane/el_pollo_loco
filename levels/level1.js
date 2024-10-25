@@ -1,7 +1,16 @@
+/**
+ * Creates a new instance of the level.
+ * 
+ * @type {Level}
+ * @param {Enemy[]} enemies - Array of enemies for the level, including Skulls and Endboss.
+ * @param {Cloud[]} clouds - Array of cloud objects for the background.
+ * @param {BackgroundObject[]} backgroundObjects - Array of background objects that make up the game's parallax background.
+ */
 const level1 = new Level(
-  [new Skull(),new Skull(), new Endboss()],
-  [new Cloud(),new Cloud(),new Cloud(),new Cloud()],
+  [new Skull(), new Skull(), new Endboss()], // Array of enemies
+  [new Cloud(), new Cloud(), new Cloud(), new Cloud()], // Array of clouds
   [
+    // Array of background layers for the level
     new BackgroundObject("img/background/PNG/3_game_background/layers/1.png", -719, 1),
     new BackgroundObject("img/background/PNG/3_game_background/layers/1.png", 0, 0.1),
     new BackgroundObject("img/background/PNG/3_game_background/layers/2.png", 0, 0.1),

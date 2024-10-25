@@ -1,5 +1,8 @@
 const fullscreenElement = document.getElementById("fullscreen");
 
+/**
+ * Toggles between fullscreen mode and normal mode.
+ */
 function toggleFullscreen() {
   if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
     openFullscreen();
@@ -8,6 +11,9 @@ function toggleFullscreen() {
   }
 }
 
+/**
+ * Activates fullscreen mode on the provided element.
+ */
 function openFullscreen() {
   // Vollbildmodus aktivieren
   if (fullscreenElement.requestFullscreen) {
@@ -21,6 +27,9 @@ function openFullscreen() {
   }
 }
 
+/**
+ * Exits fullscreen mode and returns to normal view.
+ */
 function closeFullscreen() {
   // Vollbildmodus verlassen
   if (document.exitFullscreen) {
@@ -34,6 +43,9 @@ function closeFullscreen() {
   }
 }
 
+/**
+ * Mutes all sounds in the game by toggling the `allSoundsMute` flag and pausing all audio elements.
+ */
 function muteAllSounds() {
   allSoundsMute = !allSoundsMute;
   allSounds.forEach((audio) => {
@@ -41,11 +53,17 @@ function muteAllSounds() {
   });
 }
 
+/**
+ * Restarts the game by stopping all intervals and calling the `startGame` function.
+ */
 function restartGame() {
   stopAllIntervals();
   startGame();
 }
 
+/**
+ * Unpauses the character and resumes the game if the game is paused, otherwise pauses the game.
+ */
 function unpauseCharacter() {
   if (gameIsPaused) {
     world.character.animate();

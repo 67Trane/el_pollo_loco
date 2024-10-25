@@ -2,7 +2,11 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+/**
+ * Initializes the game by checking if the start button has been pressed and starting the game.
+ */
 function init() {
+  isOnMobile()
   let checkStart = setInterval(() => {
     if (gameStart) {
       loadingScreen();
@@ -12,11 +16,17 @@ function init() {
   }, 500);
 }
 
+/**
+ * Hides the start screen and sets the gameStart flag to true.
+ */
 function startButton() {
   document.getElementById("start-screen").classList.add("d-none");
   gameStart = true;
 }
 
+/**
+ * Displays the loading screen and starts loading the game.
+ */
 function loadingScreen() {
   loadingScreenDiv = document.getElementById("loading-screen");
   loadingScreenImg = document.getElementById("loading-screen-img");
@@ -31,6 +41,9 @@ function loadingScreen() {
   }, 60);
 }
 
+/**
+ * Updates the loading screen with the next image in the sequence.
+ */
 function loadLoadingScreen() {
   i = (count % amountOfPics) + 1;
   formatedNumber = smallerThenTen(i);
@@ -38,20 +51,34 @@ function loadLoadingScreen() {
   count++;
 }
 
+/**
+ * Removes the loading screen after the game has loaded.
+ */
 function removeLoadingScreen() {
   loadingScreenDiv.classList.add("d-none");
   clearInterval(intervalId);
 }
 
+/**
+ * Formats numbers less than 10 with a leading zero.
+ * @param {number} number - The number to format.
+ * @returns {string} The formatted number.
+ */
 function smallerThenTen(number) {
   return number < 10 ? `0${number}` : number;
 }
 
+/**
+ * Starts the game by initializing the world and attaching it to the canvas.
+ */
 function startGame() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
 }
 
+/**
+ * Adds event listeners for keydown events to control the character and game.
+ */
 document.addEventListener("keydown", (event) => {
   if (event.keyCode == 80) {
     unpauseCharacter();
@@ -85,6 +112,9 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+/**
+ * Adds event listeners for keyup events to stop the character's movement.
+ */
 document.addEventListener("keyup", (event) => {
   if (event.keyCode == 39) {
     keyboard.RIGHT = false;
@@ -111,12 +141,18 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+/**
+ * Stops all active intervals to pause the game.
+ */
 function stopAllIntervals() {
   window.gameIsPaused = true;
   window.gameIntervalIds.forEach(clearInterval);
   window.gameIntervalIds = [];
 }
 
+/**
+ * Displays the rotation message for mobile devices if the screen is in portrait mode.
+ */
 function isMobileRotate() {
   let rotate = document.getElementById("rotate");
   if (window.innerWidth < window.innerHeight) {
@@ -129,10 +165,17 @@ function isMobileRotate() {
 window.addEventListener("resize", isMobileRotate);
 window.addEventListener("load", isMobileRotate);
 
+/**
+ * Checks if the current device is a mobile device based on the user agent.
+ * @returns {boolean} True if the device is mobile, false otherwise.
+ */
 function isMobileDevice() {
-  return /Mobi|Android|iPhonei|iPad|iPod/i.test(navigator.userAgent);
+  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
+/**
+ * Changes the HUD layout based on whether the device is mobile or not.
+ */
 function changeHud() {
   if (isMobileDevice()) {
     window.isMobile = true;
@@ -143,18 +186,30 @@ function changeHud() {
 
 changeHud();
 
+/**
+ * Closes the info field.
+ */
 function closeInfo() {
   document.getElementById("info-field-wrapper").classList.add("d-none");
 }
 
+/**
+ * Closes the impressum field.
+ */
 function closeImpressum() {
   document.getElementById("impressum-field").classList.add("d-none");
 }
 
+/**
+ * Opens the info field.
+ */
 function openInfo() {
   document.getElementById("info-field-wrapper").classList.remove("d-none");
 }
 
+/**
+ * Opens the impressum field.
+ */
 function openImpressum() {
   document.getElementById("impressum-field").classList.remove("d-none");
 }
