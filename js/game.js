@@ -147,6 +147,14 @@ function closeInfo() {
   document.getElementById("info-field-wrapper").classList.add("d-none");
 }
 
+function closeImpressum() {
+  document.getElementById("impressum-field").classList.add("d-none");
+}
+
 function openInfo() {
   document.getElementById("info-field-wrapper").classList.remove("d-none");
+}
+
+function openImpressum() {
+  document.getElementById("impressum-field").classList.remove("d-none");
 }

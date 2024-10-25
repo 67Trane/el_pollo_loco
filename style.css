@@ -344,3 +344,17 @@ canvas {
     transition: linear;
   }
 }
+
+.impressum-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  font-family: Arial, sans-serif;
+}
+
+a {
+  font-family: Arial, sans-serif;
+}

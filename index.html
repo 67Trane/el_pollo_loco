@@ -6,7 +6,6 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="./style.css">
    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
-
    <script src="./js/global.js"></script>
    <script src="./models/drawable-object.class.js"></script>
    <script src="./models/moveable-object.class.js"></script>
@@ -66,6 +65,21 @@
       </div>
 
       <div class="start-screen" id="start-screen">
+
+         <div class="info-field-wrapper d-none" id="impressum-field">
+            <div class="info-field " id="info-field">
+               <span>Impressum</span>
+               <img src="./img/CloseBtn.png" alt="" class="close-btn" id="close-btn" onclick="closeImpressum()">
+               <div class="info-text impressum-details">
+                  <p>Verantwortlich für den Inhalt gemäß § 5 TMG:</p>
+                  <p>Mehmet Deliaci<br>
+                     91781 Weißenburg</p>
+                  <p>E-Mail: <a href="mailto:Trane_67@hotmail.de">Trane_67@hotmail.de</a></p>
+               </div>
+            </div>
+         </div>
+
+
          <div class="info-field-wrapper d-none" id="info-field-wrapper">
             <div class="info-field" id="info-field">
                <span>Information</span>
@@ -82,6 +96,7 @@
          <button class="start-btn btn-donate" id="start-btn" onclick="startButton()"><span class="text">S T A R
                T</span></button>
          <button class="start-btn btn-donate" id="infos" onclick="openInfo()"><span>i n f o</span></button>
+         <button class="start-btn btn-donate" id="infos" onclick="openImpressum()"><span>impressum</span></button>
 
       </div>
       <canvas id="canvas" width="720" height="480"></canvas>
