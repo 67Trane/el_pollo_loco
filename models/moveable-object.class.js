@@ -148,29 +148,36 @@ class MoveableObject extends DrawableObject {
   }
 
   skullIsDying() {
-    let speed;
+    let speed = this.setDyingSpeed();
     this.currentImage = 0;
-    if (this instanceof Skull) {
-      speed = 40;
-    } else if (this instanceof Endboss) {
-      speed = 80;
-    }
     let interval = setInterval(() => {
       clearInterval(this.moveId);
       this.playAnimation(this.IMAGES_DYING, true);
-      if (this instanceof Skull) {
-        this.width = 150;
-        this.height = 130;
-        this.y = 342.5 - 13;
-      } else if (this instanceof Endboss) {
-        this.height = 500;
-        this.width = 400;
-        this.y = 10;
-      }
+      this.updateSkullSize();
       if (this.currentImage >= this.IMAGES_DYING.length) {
         clearInterval(interval);
         this.isDead = true;
       }
     }, speed);
+  }
+
+  updateSkullSize() {
+    if (this instanceof Skull) {
+      this.width = 150;
+      this.height = 130;
+      this.y = 342.5 - 13;
+    } else if (this instanceof Endboss) {
+      this.height = 500;
+      this.width = 400;
+      this.y = 10;
+    }
+  }
+
+  setDyingSpeed() {
+    if (this instanceof Skull) {
+      return 40;
+    } else if (this instanceof Endboss) {
+      return 80;
+    }
   }
 }

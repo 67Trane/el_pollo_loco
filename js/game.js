@@ -23,17 +23,24 @@ function loadingScreen() {
   loadingScreenDiv.classList.remove("d-none");
   count = 0;
   amountOfPics = 26;
-
   intervalId = setInterval(() => {
-    i = (count % amountOfPics) + 1;
-    formatedNumber = smallerThenTen(i);
-    loadingScreenImg.src = `./img/text-animation/PNG/LoadGame/LoadGame_${formatedNumber}.png`;
-    count++;
+    loadLoadingScreen();
     if (loaded) {
-      loadingScreenDiv.classList.add("d-none");
-      clearInterval(intervalId);
+      removeLoadingScreen();
     }
   }, 60);
+}
+
+function loadLoadingScreen() {
+  i = (count % amountOfPics) + 1;
+  formatedNumber = smallerThenTen(i);
+  loadingScreenImg.src = `./img/text-animation/PNG/LoadGame/LoadGame_${formatedNumber}.png`;
+  count++;
+}
+
+function removeLoadingScreen() {
+  loadingScreenDiv.classList.add("d-none");
+  clearInterval(intervalId);
 }
 
 function smallerThenTen(number) {

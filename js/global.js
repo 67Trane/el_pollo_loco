@@ -5,3 +5,5 @@ allSoundsMute = true; // SHOULD ON FALSE ON DEFAULT DONT FORGET !!!
 allSounds = []
 gameStart = false;
 loaded = false;
+imagesLoaded = 0;
+totalImages = 0;

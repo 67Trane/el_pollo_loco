@@ -114,10 +114,10 @@ class World {
     if (this.keyboard.F) {
       if (this.canThrow) {
         this.throwObject();
-        this.canThrow = false
+        this.canThrow = false;
         setTimeout(() => {
-          this.canThrow = true
-        }, 500)
+          this.canThrow = true;
+        }, 500);
       }
     }
   }
@@ -195,21 +195,28 @@ class World {
       if (enemy.isDead == true) {
         this.level.enemies.splice(index, 1);
       }
-      if (this.character.isJumpingOn(enemy)) {
-        this.character.jump();
-        enemy.skullIsDying();
-        clearInterval(enemy.moveId);
-        clearInterval(enemy.idleId);
-
-        return true;
-      }
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.character.knockBack();
-        this.statusBar.setPercentage(this.character.energy);
-        return true;
-      }
+      this.playerJumpedOnEnemie(enemy);
+      this.playerCollidingWithEnemie(enemy);
     });
+  }
+
+  playerJumpedOnEnemie(enemy) {
+    if (this.character.isJumpingOn(enemy)) {
+      this.character.jump();
+      enemy.skullIsDying();
+      clearInterval(enemy.moveId);
+      clearInterval(enemy.idleId);
+      return true;
+    }
+  }
+
+  playerCollidingWithEnemie(enemy) {
+    if (this.character.isColliding(enemy)) {
+      this.character.hit();
+      this.character.knockBack();
+      this.statusBar.setPercentage(this.character.energy);
+      return true;
+    }
   }
 
   throwHit(enemy) {
@@ -219,23 +226,39 @@ class World {
           this.throwableObject.splice(index, 1);
           this.objectExplodes(bottle);
           enemy.hp -= 10;
-          if (enemy instanceof Endboss) {
-            enemy.healthbar.setPercentage(enemy.hp);
-          }
-          if (enemy.hp <= 0) {
-            if (enemy instanceof Endboss) {
-              setTimeout(() => {
-                stopAllIntervals();
-                this.winningscreen();
-              }, 2000);
-            }
-            enemy.skullIsDying();
-            clearInterval(enemy.moveId);
-            clearInterval(enemy.idleId);
-          }
+          this.updateEndbossHealthbar(enemy);
+          this.checkIfEnemieIsDead(enemy);
         }
       });
     }
+  }
+
+  updateEndbossHealthbar(enemy) {
+    if (enemy instanceof Endboss) {
+      enemy.healthbar.setPercentage(enemy.hp);
+    }
+  }
+
+  checkIfEnemieIsDead(enemy) {
+    if (enemy.hp <= 0) {
+      this.endbossDead(enemy);
+      this.killEnemie(enemy);
+    }
+  }
+
+  endbossDead(enemy) {
+    if (enemy instanceof Endboss) {
+      setTimeout(() => {
+        stopAllIntervals();
+        this.winningscreen();
+      }, 2000);
+    }
+  }
+
+  killEnemie(enemy) {
+    enemy.skullIsDying();
+    clearInterval(enemy.moveId);
+    clearInterval(enemy.idleId);
   }
 
   checkWinningScreen() {

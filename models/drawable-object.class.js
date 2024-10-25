@@ -27,9 +27,16 @@ class DrawableObject {
    */
   loadImages(arr) {
     arr.forEach((path) => {
+      totalImages++;
       this.img = new Image();
       this.img.src = path;
       this.imageCache[path] = this.img;
+      this.img.onload = () => {
+        imagesLoaded++;
+        if(imagesLoaded == totalImages){
+          loaded = true;
+        }
+      };
     });
   }
 
